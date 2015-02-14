@@ -1,0 +1,66 @@
+//
+//  D.cpp
+//  HW1
+//
+//  Created by Вадим Кохтев on 27/01/15.
+//  Copyright (c) 2015 Вадим Кохтев. All rights reserved.
+//
+
+#include <iostream>
+#include<vector>
+
+void merge(std::vector<int>& arr,int begin,int middle,int end) {
+    int l=middle-begin+1;
+    int r=end-middle;
+    std::vector<int> L;
+    std::vector<int> R;
+    for(int i=1;i<=l; i++) {
+        L.push_back(arr[begin+i-1]);
+    }
+    for(int j=1;j<=r; j++) {
+        R.push_back(arr[middle+j]);
+    }
+    for(int i=0,j=0,k=begin; k<=end; k++) {
+        if(i<l && j<r) {
+            if(L[i]<=R[j]) {
+                arr[k]=L[i];
+                i++;
+            } else {
+                arr[k]=R[j];
+                j++;
+            }
+        } else if(i<l) {
+            arr[k]=L[i];
+            i++;
+        } else {
+            arr[k]=R[j];
+            j++;
+        }
+    }
+}
+void merge_sort(std::vector<int>& arr,int begin,int end) {
+    int middle;
+    if(begin<end) {
+        middle=begin+(end-begin)/2;
+        merge_sort(arr,begin,middle);
+        merge_sort(arr,middle+1,end);
+        merge(arr,begin,middle,end);
+    }
+}
+int main() {
+    std::vector<int> arr;
+    int n,k;
+    std::cin >> n;
+    if (n == 0) {
+        return 0;
+    }
+    for (int i = 0; i < n; ++i) {
+        std::cin >> k;
+        arr.push_back(k);
+    }
+    merge_sort(arr, 0, int(arr.size()-1));
+    for (int i = 0; i < n ; ++i) {
+        std::cout << arr[i] << " ";
+    }
+    return 0;
+}
