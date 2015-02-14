@@ -1,0 +1,51 @@
+//
+//  E.cpp
+//  HW1
+//
+//  Created by Вадим Кохтев on 12/02/15.
+//  Copyright (c) 2015 Вадим Кохтев. All rights reserved.
+//
+
+
+#include <iostream>
+#include <stdlib.h>
+#include <vector>
+
+template<typename T>
+T Partition(T start, T end, int pivot) {
+    if(start == end) {
+        return start;
+    }
+    T begin = start;
+    while(true) {
+        while(*begin < pivot && begin < end) { // hoare partition
+            ++begin;
+        }
+        while(end > start && end >= begin && *(end-1) >= pivot){
+            --end;
+        }
+        if(begin < end) {
+            std::swap(*(end-1), *begin);
+            --end;
+            ++begin;
+        } else {
+            break;
+        }
+    }
+    return end;
+}
+
+int main() {
+    int n;
+    std::cin >> n;
+    std::vector<int> arr(n);
+    for(size_t i = 0; i < n; i++) {
+        std::cin >> arr[i];
+    }
+    int pivot;
+    std::cin >> pivot;
+    auto piv_exit = Partition(arr.begin(), arr.end(), pivot); // долго думал с этой штукой, помогла Миша
+    std::cout << piv_exit - arr.begin() << std::endl;
+    std::cout << arr.end() - piv_exit << std::endl;
+    return 0;
+}
