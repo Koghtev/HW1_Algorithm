@@ -1,0 +1,33 @@
+//
+//  B.cpp
+//  HW1
+//
+//  Created by Вадим Кохтев on 26/01/15.
+//  Copyright (c) 2015 Вадим Кохтев. All rights reserved.
+//
+
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> a;
+    int n,k;
+    std::cin >> n;
+    for (int i = 0; i < n; ++i) {
+        std::cin >> k;
+        a.push_back(k);
+    }
+    for (int i = 0; i < n; i++) {
+        int max_i = i;
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] > a[max_i]) {
+                max_i = j;
+            }
+        }
+        std::swap (a[i], a[max_i]);
+    }
+    for (int i=n-1; i >= 0; i--) {
+        std::cout << a[i] << ' ';
+    }
+    return 0;
+}
